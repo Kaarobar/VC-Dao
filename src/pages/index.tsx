@@ -1,9 +1,12 @@
 import Head from "next/head";
+import InitialHomeScreen from "../components/InitialHomeScreen";
+import Footer from "../components/Layout/Footer";
 
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
+      <InitialHomeScreen />
+      <Footer />
     </div>
   );
 };
