@@ -1,8 +1,8 @@
 import React from "react";
 import Countdown from "./Countdown";
 
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 
 const InitialHomeScreen = () => {
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
@@ -12,24 +12,8 @@ const InitialHomeScreen = () => {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      <div className="w-52 h-52">
-        <CircularProgressbarWithChildren
-          value={20}
-          strokeWidth={3}
-          styles={{
-            trail: {
-              stroke: "rgb(209 213 219)",
-            },
-            path: {
-              stroke: `rgb(23, 23, 23, ${20 / 100})`,
-            },
-          }}
-        >
-          <div className="h-40 w-40 bg-black rounded-full flex items-center justify-center">
-            <h1 className="text-white">VC Dao</h1>
-          </div>
-        </CircularProgressbarWithChildren>
-      </div>
+      
+      <CircularProgressBarWithLogo percentage={40} />
 
       <div className="flex items-center gap-2 mt-4">
         <div className="w-6 h-6">
