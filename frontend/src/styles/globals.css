@@ -30,3 +30,10 @@
   margin: 0;
   padding: 0;
 }
+
+.container {
+  width: calc(100% - 2rem);
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+}
