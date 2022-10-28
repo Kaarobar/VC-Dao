@@ -29,7 +29,7 @@ contract CrowdFunding {
         string memory title,
         string memory description,
         uint durationInDays
-    ) public {
+    ) public onlyOwner {
         uint fundRaisingDeadline = block.timestamp + (durationInDays*24*3600);
         Project project = new Project(
             msg.sender,
