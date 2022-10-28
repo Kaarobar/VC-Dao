@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import VotingStatusTag from "../../../../../common/VotingStatusTag";
 
 interface Props {
   title: string;
@@ -17,15 +18,7 @@ const TableDataProposal: FC<Props> = ({ title, id, status }) => {
           {title}
         </p>
         <div className="space-x-2 text-sm">
-          <span
-            className={`uppercase font-medium rounded-sm px-2 py-1 ${
-              status === "active"
-                ? "bg-purple-100 text-purple-500"
-                : "bg-green-100 text-green-500"
-            } tracking-wide`}
-          >
-            {status}
-          </span>
+          <VotingStatusTag status={status} />
           <span className="text-gray-500">ID {id}</span>
         </div>
       </div>

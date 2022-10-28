@@ -1,14 +1,14 @@
 import React from "react";
-import Button from "../../components/common/Button";
-import CoinTag from "../../components/Governance/CoinTag";
-import InfoBox from "../../components/Governance/InfoBox";
-import TableRow from "../../components/Governance/Table/Row";
-import TableHead from "../../components/Governance/Table/Head";
-import Layout from "../../components/Layout";
-import { TableData } from "../../components/Governance/Table/Row/Data";
-import TableDataProposal from "../../components/Governance/Table/Row/Data/Proposal";
-import TableDataVoteProgress from "../../components/Governance/Table/Row/Data/VoteProgress";
-import TableDateVotes from "../../components/Governance/Table/Row/Data/Votes";
+import Button from "../../../components/common/Button";
+import CoinTag from "../../../components/Governance/CoinTag";
+import InfoBox from "../../../components/Governance/InfoBox";
+import TableRow from "../../../components/Governance/Table/Row";
+import TableHead from "../../../components/Governance/Table/Head";
+import Layout from "../../../components/Layout";
+import { TableData } from "../../../components/Governance/Table/Row/Data";
+import TableDataProposal from "../../../components/Governance/Table/Row/Data/Proposal";
+import TableDataVoteProgress from "../../../components/Governance/Table/Row/Data/VoteProgress";
+import TableDateVotes from "../../../components/Governance/Table/Row/Data/Votes";
 
 const Governance = () => {
   return (
