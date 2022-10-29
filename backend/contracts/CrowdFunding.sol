@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Project.sol";
 
@@ -10,7 +10,7 @@ import "./Project.sol";
  */
 contract CrowdFunding {
     Project[] private s_projects;
-    
+
     event ProjectCreated(
         address indexed contractAddress,
         address indexed creator,
@@ -30,7 +30,8 @@ contract CrowdFunding {
         string memory description,
         uint durationInDays
     ) public {
-        uint fundRaisingDeadline = block.timestamp + (durationInDays*24*3600);
+        uint fundRaisingDeadline = block.timestamp +
+            (durationInDays * 24 * 3600);
         Project project = new Project(
             msg.sender,
             token,
@@ -42,11 +43,11 @@ contract CrowdFunding {
         );
         s_projects.push(project);
         emit ProjectCreated(
-            address(project),   //project address
-            msg.sender,         //project initiator
-            title,              //coin name or starting of project
-            fundRaisingDeadline,//deadline in days
-            goalAmount          //amnt needed to be raised
+            address(project), //project address
+            msg.sender, //project initiator
+            title, //coin name or starting of project
+            fundRaisingDeadline, //deadline in days
+            goalAmount //amnt needed to be raised
         );
     }
 

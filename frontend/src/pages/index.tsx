@@ -4,10 +4,9 @@ import Footer from "../components/Layout/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <InitialHomeScreen />
-      <Footer />
-    </div>
+    </>
   );
 };
 
