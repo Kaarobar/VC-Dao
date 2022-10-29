@@ -12,7 +12,6 @@ const InitialHomeScreen = () => {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      
       <CircularProgressBarWithLogo percentage={40} />
 
       <div className="flex items-center gap-2 mt-4">
