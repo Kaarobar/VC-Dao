@@ -3,6 +3,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-ethers";
 import "hardhat-gas-reporter";
+import "hardhat-contract-sizer";
 import "dotenv/config";
 import "solidity-coverage";
 import "hardhat-deploy";
@@ -16,14 +17,16 @@ const MAINNET_RPC_URL =
   process.env.MAINNET_RPC_URL ||
   process.env.ALCHEMY_MAINNET_RPC_URL ||
   "https://eth-mainnet.alchemyapi.io/v2/your-api-key";
-const RINKEBY_RPC_URL =
-  process.env.RINKEBY_RPC_URL ||
-  "https://eth-rinkeby.alchemyapi.io/v2/your-api-key";
+
+const GOERLI_RPC_URL =
+  process.env.GOERLI_RPC_URL ||
+  "https://eth-goerli.alchemyapi.io/v2/your-api-key";
 const KOVAN_RPC_URL =
   process.env.KOVAN_RPC_URL ||
   "https://eth-kovan.alchemyapi.io/v2/your-api-key";
-const POLYGON_MAINNET_RPC_URL =
-  process.env.POLYGON_MAINNET_RPC_URL ||
+
+const POLYGON_MUMBAI_RPC_URL =
+  process.env.POLYGON_MUMBAI_RPC_URL ||
   "https://polygon-mainnet.alchemyapi.io/v2/your-api-key";
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 // optional
@@ -58,14 +61,14 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
       chainId: 42,
     },
-    rinkeby: {
-      url: RINKEBY_RPC_URL,
+    goerli: {
+      url: GOERLI_RPC_URL,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       //   accounts: {
       //     mnemonic: MNEMONIC,
       //   },
       saveDeployments: true,
-      chainId: 4,
+      chainId: 5,
     },
     mainnet: {
       url: MAINNET_RPC_URL,
@@ -77,18 +80,18 @@ const config: HardhatUserConfig = {
       chainId: 1,
     },
     polygon: {
-      url: POLYGON_MAINNET_RPC_URL,
+      url: POLYGON_MUMBAI_RPC_URL,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       saveDeployments: true,
-      chainId: 137,
+      chainId: 80001,
     },
   },
   etherscan: {
     // npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
     apiKey: {
-      rinkeby: ETHERSCAN_API_KEY,
+      goerli: ETHERSCAN_API_KEY,
       kovan: ETHERSCAN_API_KEY,
-      polygon: POLYGONSCAN_API_KEY,
+      polygonMumbai: POLYGONSCAN_API_KEY,
     },
   },
   gasReporter: {
@@ -97,6 +100,11 @@ const config: HardhatUserConfig = {
     outputFile: "gas-report.txt",
     noColors: true,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: true,
+    disambiguatePaths: false,
   },
   namedAccounts: {
     deployer: {
@@ -111,6 +119,21 @@ const config: HardhatUserConfig = {
     compilers: [
       {
         version: "0.8.17",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000,
+          },
+        },
+      },
+      {
+        version: "0.8.4",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000,
+          },
+        },
       },
       {
         version: "0.4.24",
