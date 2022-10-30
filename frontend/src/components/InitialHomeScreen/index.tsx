@@ -3,6 +3,8 @@ import Countdown from "./Countdown";
 
 import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
+import Button from "../common/Button";
+import Footer from "../Layout/Footer";
 
 const InitialHomeScreen = () => {
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
@@ -12,14 +14,13 @@ const InitialHomeScreen = () => {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      
-      <CircularProgressBarWithLogo percentage={40} />
+      <CircularProgressBarWithLogo percentage={80} />
 
       <div className="flex items-center gap-2 mt-4">
         <div className="w-6 h-6">
           <img src="/assets/images/eth.svg" className="w-full h-full" />
         </div>
-        <div className="uppercase text-lg font-medium text-gray-600">
+        <div className="uppercase text-lg font-medium text-gray-500">
           100 eth
         </div>
       </div>
@@ -29,10 +30,10 @@ const InitialHomeScreen = () => {
       </div>
 
       <div>
-        <button className="text-lg font-medium tracking-wide capitalize bg-black text-white h-12 px-14 rounded-lg cursor-pointer border-0 transition-text hover:border-2 hover:border-solid hover:border-black hover:bg-white hover:text-black">
-          invest now
-        </button>
+        <Button size="md" text="Invest Now" withBg />
       </div>
+      
+      <Footer bottom />
     </div>
   );
 };
