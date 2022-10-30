@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Countdown from "./Countdown";
-
+import { ethers } from "ethers";
 import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 
 const InitialHomeScreen = () => {
+  const vctoken = require("../../../../backend/deployments/polygon/GovernanceToken.json");
+  const crowdfund = require("../../../../backend/deployments/polygon/CrowdFunding.json");
+  useEffect(()=> {
+
+  });
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
   const NOW_IN_MS = new Date().getTime();
 
