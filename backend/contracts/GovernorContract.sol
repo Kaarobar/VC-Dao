@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/governance/Governor.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
@@ -24,11 +24,7 @@ contract GovernorContract is
         uint256 _votingDelay
     )
         Governor("GovernorContract")
-        GovernorSettings(
-            _votingDelay, /* 1 block */ // votind delay
-            _votingPeriod, // 45818, /* 1 week */ // voting period
-            0 // proposal threshold
-        )
+        GovernorSettings(_votingDelay, _votingPeriod, 0)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(_quorumPercentage)
         GovernorTimelockControl(_timelock)
@@ -51,8 +47,6 @@ contract GovernorContract is
     {
         return super.votingPeriod();
     }
-
-    // The following functions are overrides required by Solidity.
 
     function quorum(uint256 blockNumber)
         public

@@ -1,0 +1,654 @@
+{
+  "address": "0xC7964BFB7547E941a4447f8f9de198F5D3eB03B5",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenToIssue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fundRaisingDeadline",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "Project__CreatorCannotFundHisProject",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Project__FailedToSendFunds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Project__FundingNotExpired",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Project__FundsNotGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Project__IncorrectState",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "AmountRefunded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClaimTokens",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "projectToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "round",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundingExpired",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "projectToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "round",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "goalAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundRaisingDeadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundingInitiated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "projectToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "round",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundingSuccess",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "contractAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundsContributed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "project_address",
+          "type": "address"
+        }
+      ],
+      "name": "ProjectStart",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "checkIfFundingCompletedOrExpired",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimTokens",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "contribute",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDetails",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "projectStarter",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "projectTitle",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "projectDescription",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountToRaise",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountRaised",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fundingRound",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum Project.State",
+          "name": "currentState",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getRefund",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getState",
+      "outputs": [
+        {
+          "internalType": "enum Project.State",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountToRaise",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenToIssue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fundRaisingDeadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "initiateFundingRound",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "payOut",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x69b32718572ccac17f069f66f129c11f534835859818644e757e54c4d2a3fcb8",
+  "receipt": {
+    "to": null,
+    "from": "0x5fE2A76C4dA83838D72853e264f05b3a7F88202E",
+    "contractAddress": "0xC7964BFB7547E941a4447f8f9de198F5D3eB03B5",
+    "transactionIndex": 18,
+    "gasUsed": "1106236",
+    "logsBloom": "0x08000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000100000000000800001000000000000000100000000004000000000020000000000000000000800000000000000000080000000000800400000000000000000000010000000000000000000000080000000000000040000200000000000000000000000000000000000000000000000000000000000004000000000000000000001000000000000000000000000000000100040009020000000000400000000000000000000000000000000100000000000000000100000",
+    "blockHash": "0x9aeafe90c8bb67ed702f3e729d9bbcae643252cb8be197966151d86ed55f922f",
+    "transactionHash": "0x69b32718572ccac17f069f66f129c11f534835859818644e757e54c4d2a3fcb8",
+    "logs": [
+      {
+        "transactionIndex": 18,
+        "blockNumber": 28907974,
+        "transactionHash": "0x69b32718572ccac17f069f66f129c11f534835859818644e757e54c4d2a3fcb8",
+        "address": "0xC7964BFB7547E941a4447f8f9de198F5D3eB03B5",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000005fe2a76c4da83838d72853e264f05b3a7f88202e"
+        ],
+        "data": "0x",
+        "logIndex": 72,
+        "blockHash": "0x9aeafe90c8bb67ed702f3e729d9bbcae643252cb8be197966151d86ed55f922f"
+      },
+      {
+        "transactionIndex": 18,
+        "blockNumber": 28907974,
+        "transactionHash": "0x69b32718572ccac17f069f66f129c11f534835859818644e757e54c4d2a3fcb8",
+        "address": "0xC7964BFB7547E941a4447f8f9de198F5D3eB03B5",
+        "topics": [
+          "0x3c831dcf6fd0b80fe93c3ee5d9557ada5a592ba10c1dbe75b71be141107d60a5",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "data": "0x000000000000000000000000c7964bfb7547e941a4447f8f9de198f5d3eb03b5",
+        "logIndex": 73,
+        "blockHash": "0x9aeafe90c8bb67ed702f3e729d9bbcae643252cb8be197966151d86ed55f922f"
+      },
+      {
+        "transactionIndex": 18,
+        "blockNumber": 28907974,
+        "transactionHash": "0x69b32718572ccac17f069f66f129c11f534835859818644e757e54c4d2a3fcb8",
+        "address": "0x0000000000000000000000000000000000001010",
+        "topics": [
+          "0x4dfe1bbbcf077ddc3e01291eea2d5c70c2b422b415d95645b9adcfd678cb1d63",
+          "0x0000000000000000000000000000000000000000000000000000000000001010",
+          "0x0000000000000000000000005fe2a76c4da83838d72853e264f05b3a7f88202e",
+          "0x000000000000000000000000be188d6641e8b680743a4815dfa0f6208038960f"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000000003ee1da1936e08000000000000000000000000000000000000000000000000022700e255cfafd0000000000000000000000000000000000000000000002710751f936531fca52a000000000000000000000000000000000000000000000000022312c4b43c41c800000000000000000000000000000000000000000000271075238182d3901332",
+        "logIndex": 74,
+        "blockHash": "0x9aeafe90c8bb67ed702f3e729d9bbcae643252cb8be197966151d86ed55f922f"
+      }
+    ],
+    "blockNumber": 28907974,
+    "cumulativeGasUsed": "6327442",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xf821D3365814a704e59D7165B3D4CCAa3dF65Ba7",
+    "0",
+    "100000",
+    "VCDao",
+    "Decentralized Investment platform",
+    "1"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "704da8805b139322d9ad03719e182982",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenToIssue\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"fundRaisingDeadline\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"Project__CreatorCannotFundHisProject\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Project__FailedToSendFunds\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Project__FundingNotExpired\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Project__FundsNotGiven\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Project__IncorrectState\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"AmountRefunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ClaimTokens\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"projectToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"round\",\"type\":\"uint256\"}],\"name\":\"FundingExpired\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"projectToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"round\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"goalAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"fundRaisingDeadline\",\"type\":\"uint256\"}],\"name\":\"FundingInitiated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"projectToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"round\",\"type\":\"uint256\"}],\"name\":\"FundingSuccess\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FundsContributed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"project_address\",\"type\":\"address\"}],\"name\":\"ProjectStart\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"checkIfFundingCompletedOrExpired\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimTokens\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"contribute\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDetails\",\"outputs\":[{\"internalType\":\"address payable\",\"name\":\"projectStarter\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectTitle\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"projectDescription\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountToRaise\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountRaised\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"fundingRound\",\"type\":\"uint256\"},{\"internalType\":\"enum Project.State\",\"name\":\"currentState\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRefund\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getState\",\"outputs\":[{\"internalType\":\"enum Project.State\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountToRaise\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenToIssue\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"fundRaisingDeadline\",\"type\":\"uint256\"}],\"name\":\"initiateFundingRound\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"payOut\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"claimTokens()\":{\"details\":\"investor recieves a proportion of Project's tokens based on amount funded\"},\"contribute()\":{\"details\":\"gather funds to meet the goal before deadline. Creator is not allowed to fund his project. For intial rounds, funders can only give a certain max amount which would be change to any amount after certain number of rounds\"},\"initiateFundingRound(uint256,uint256,uint256)\":{\"details\":\"start successive funding rounds after majority funders agree to it\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"claimTokens()\":{\"notice\":\"assume the Project token is already deployed SUGGESTION: We can mint the relevant project tokens here and issue it to investor\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Project.sol\":\"Project\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _transferOwnership(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `to`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address to, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `from` to `to` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(\\n        address from,\\n        address to,\\n        uint256 amount\\n    ) external returns (bool);\\n}\\n\",\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.7.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    enum Rounding {\\n        Down, // Toward negative infinity\\n        Up, // Toward infinity\\n        Zero // Toward zero\\n    }\\n\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a >= b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds up instead\\n     * of rounding down.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a == 0 ? 0 : (a - 1) / b + 1;\\n    }\\n\\n    /**\\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)\\n     * with further edits by Uniswap Labs also under MIT license.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator\\n    ) internal pure returns (uint256 result) {\\n        unchecked {\\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\\n            // variables such that product = prod1 * 2^256 + prod0.\\n            uint256 prod0; // Least significant 256 bits of the product\\n            uint256 prod1; // Most significant 256 bits of the product\\n            assembly {\\n                let mm := mulmod(x, y, not(0))\\n                prod0 := mul(x, y)\\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n            }\\n\\n            // Handle non-overflow cases, 256 by 256 division.\\n            if (prod1 == 0) {\\n                return prod0 / denominator;\\n            }\\n\\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\\n            require(denominator > prod1);\\n\\n            ///////////////////////////////////////////////\\n            // 512 by 256 division.\\n            ///////////////////////////////////////////////\\n\\n            // Make division exact by subtracting the remainder from [prod1 prod0].\\n            uint256 remainder;\\n            assembly {\\n                // Compute remainder using mulmod.\\n                remainder := mulmod(x, y, denominator)\\n\\n                // Subtract 256 bit number from 512 bit number.\\n                prod1 := sub(prod1, gt(remainder, prod0))\\n                prod0 := sub(prod0, remainder)\\n            }\\n\\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.\\n            // See https://cs.stackexchange.com/q/138556/92363.\\n\\n            // Does not overflow because the denominator cannot be zero at this stage in the function.\\n            uint256 twos = denominator & (~denominator + 1);\\n            assembly {\\n                // Divide denominator by twos.\\n                denominator := div(denominator, twos)\\n\\n                // Divide [prod1 prod0] by twos.\\n                prod0 := div(prod0, twos)\\n\\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\\n                twos := add(div(sub(0, twos), twos), 1)\\n            }\\n\\n            // Shift in bits from prod1 into prod0.\\n            prod0 |= prod1 * twos;\\n\\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\\n            // four bits. That is, denominator * inv = 1 mod 2^4.\\n            uint256 inverse = (3 * denominator) ^ 2;\\n\\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works\\n            // in modular arithmetic, doubling the correct bits in each step.\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\\n\\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\\n            // is no longer required.\\n            result = prod0 * inverse;\\n            return result;\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator,\\n        Rounding rounding\\n    ) internal pure returns (uint256) {\\n        uint256 result = mulDiv(x, y, denominator);\\n        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Returns the square root of a number. It the number is not a perfect square, the value is rounded down.\\n     *\\n     * Inspired by Henry S. Warren, Jr.'s \\\"Hacker's Delight\\\" (Chapter 11).\\n     */\\n    function sqrt(uint256 a) internal pure returns (uint256) {\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\\n        // We know that the \\\"msb\\\" (most significant bit) of our target number `a` is a power of 2 such that we have\\n        // `msb(a) <= a < 2*msb(a)`.\\n        // We also know that `k`, the position of the most significant bit, is such that `msb(a) = 2**k`.\\n        // This gives `2**k < a <= 2**(k+1)` \\u2192 `2**(k/2) <= sqrt(a) < 2 ** (k/2+1)`.\\n        // Using an algorithm similar to the msb conmputation, we are able to compute `result = 2**(k/2)` which is a\\n        // good first aproximation of `sqrt(a)` with at least 1 correct bit.\\n        uint256 result = 1;\\n        uint256 x = a;\\n        if (x >> 128 > 0) {\\n            x >>= 128;\\n            result <<= 64;\\n        }\\n        if (x >> 64 > 0) {\\n            x >>= 64;\\n            result <<= 32;\\n        }\\n        if (x >> 32 > 0) {\\n            x >>= 32;\\n            result <<= 16;\\n        }\\n        if (x >> 16 > 0) {\\n            x >>= 16;\\n            result <<= 8;\\n        }\\n        if (x >> 8 > 0) {\\n            x >>= 8;\\n            result <<= 4;\\n        }\\n        if (x >> 4 > 0) {\\n            x >>= 4;\\n            result <<= 2;\\n        }\\n        if (x >> 2 > 0) {\\n            result <<= 1;\\n        }\\n\\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\\n        // into the expected uint128 result.\\n        unchecked {\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            return min(result, a / result);\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates sqrt(a), following the selected rounding direction.\\n     */\\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\\n        uint256 result = sqrt(a);\\n        if (rounding == Rounding.Up && result * result < a) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n}\\n\",\"keccak256\":\"0xd15c3e400531f00203839159b2b8e7209c5158b35618f570c695b7e47f12e9f0\",\"license\":\"MIT\"},\"contracts/Project.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.17;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\r\\nimport \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\r\\nimport \\\"@openzeppelin/contracts/utils/math/Math.sol\\\";\\r\\n\\r\\nerror Project__IncorrectState();\\r\\nerror Project__CreatorCannotFundHisProject();\\r\\nerror Project__FundingNotExpired();\\r\\nerror Project__FundsNotGiven();\\r\\nerror Project__FailedToSendFunds();\\r\\nerror Project__AmountExceedsLimit();\\r\\n\\r\\ncontract Project is Ownable {\\r\\n    enum State {\\r\\n        FUNDRAISING,\\r\\n        SUCCESS,\\r\\n        EXPIRED,\\r\\n        CLOSED\\r\\n    }\\r\\n\\r\\n    event ProjectStart(uint indexed id, address project_address);\\r\\n\\r\\n    address payable private immutable i_creator;\\r\\n    address private immutable i_token;\\r\\n    uint private immutable i_id;\\r\\n    string private s_title;\\r\\n    string private s_description;\\r\\n    uint private s_fundingRound;\\r\\n    uint private s_currentBalance;\\r\\n    State private s_state = State.CLOSED;\\r\\n\\r\\n    mapping(address => uint) contributedFunds;\\r\\n    mapping(uint => uint) tokensToIssue;\\r\\n    mapping(uint => uint) goalAmount;\\r\\n    mapping(uint => uint) raiseBy;\\r\\n\\r\\n    event ClaimTokens(address indexed to, uint amount);\\r\\n\\r\\n    event FundsContributed(\\r\\n        address indexed sender,\\r\\n        address indexed contractAddress,\\r\\n        uint amount\\r\\n    );\\r\\n\\r\\n    event AmountRefunded(address indexed to, uint amount);\\r\\n\\r\\n    event FundingSuccess(\\r\\n        uint indexed projectId,\\r\\n        address indexed projectToken,\\r\\n        uint round\\r\\n    );\\r\\n\\r\\n    event FundingExpired(\\r\\n        uint indexed projectId,\\r\\n        address indexed projectToken,\\r\\n        uint round\\r\\n    );\\r\\n\\r\\n    event FundingInitiated(\\r\\n        uint indexed projectId,\\r\\n        address indexed projectToken,\\r\\n        uint round,\\r\\n        uint goalAmount,\\r\\n        uint fundRaisingDeadline\\r\\n    );\\r\\n\\r\\n    modifier isState(State _state) {\\r\\n        if (s_state != _state) {\\r\\n            revert Project__IncorrectState();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    constructor(\\r\\n        // address creator,\\r\\n        address token,\\r\\n        uint id,\\r\\n        uint tokenToIssue,\\r\\n        string memory title,\\r\\n        string memory description,\\r\\n        uint fundRaisingDeadline\\r\\n    ) {\\r\\n        // i_creator = payable(creator);\\r\\n        i_creator = payable(msg.sender);\\r\\n        i_token = token;\\r\\n        s_title = title;\\r\\n        i_id = id;\\r\\n        s_description = description;\\r\\n        raiseBy[0] = block.timestamp + fundRaisingDeadline * 24 * 3600;\\r\\n        s_state = State.FUNDRAISING;\\r\\n        s_fundingRound = 0;\\r\\n        tokensToIssue[0] = tokenToIssue;\\r\\n        goalAmount[0] = 100;\\r\\n        s_currentBalance = 0;\\r\\n        emit ProjectStart(id, address(this));\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev gather funds to meet the goal before deadline. Creator is not allowed to fund his project. For intial rounds, funders can only give a certain max\\r\\n     * amount which would be change to any amount after certain number of rounds\\r\\n     */\\r\\n    function contribute() public payable isState(State.FUNDRAISING) {\\r\\n        if (msg.sender == i_creator)\\r\\n            revert Project__CreatorCannotFundHisProject();\\r\\n\\r\\n        contributedFunds[msg.sender] += msg.value;\\r\\n        s_currentBalance += msg.value;\\r\\n        emit FundsContributed(msg.sender, address(this), msg.value);\\r\\n        checkIfFundingCompletedOrExpired();\\r\\n    }\\r\\n\\r\\n    function checkIfFundingCompletedOrExpired() public {\\r\\n        if (s_currentBalance >= goalAmount[s_fundingRound]) {\\r\\n            s_state = State.SUCCESS;\\r\\n            emit FundingSuccess(i_id, i_token, s_fundingRound);\\r\\n        } else if (block.timestamp > raiseBy[s_fundingRound]) {\\r\\n            s_state = State.EXPIRED;\\r\\n            emit FundingExpired(i_id, i_token, s_fundingRound);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev start successive funding rounds after majority funders agree to it\\r\\n     */\\r\\n    function initiateFundingRound(\\r\\n        uint amountToRaise,\\r\\n        uint tokenToIssue,\\r\\n        uint fundRaisingDeadline\\r\\n    ) public onlyOwner isState(State.CLOSED) {\\r\\n        s_fundingRound += 1;\\r\\n        goalAmount[s_fundingRound] = amountToRaise;\\r\\n        tokensToIssue[s_fundingRound] = tokenToIssue;\\r\\n        raiseBy[s_fundingRound] = fundRaisingDeadline;\\r\\n        s_state = State.FUNDRAISING;\\r\\n        emit FundingInitiated(\\r\\n            i_id,\\r\\n            i_token,\\r\\n            s_fundingRound,\\r\\n            amountToRaise,\\r\\n            fundRaisingDeadline\\r\\n        );\\r\\n    }\\r\\n\\r\\n    function payOut() public onlyOwner isState(State.SUCCESS) returns (bool) {\\r\\n        (bool callSuccess, ) = i_creator.call{value: s_currentBalance}(\\\"\\\");\\r\\n        if (!callSuccess) revert Project__FailedToSendFunds();\\r\\n\\r\\n        s_currentBalance = 0;\\r\\n        s_state = State.CLOSED;\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev investor recieves a proportion of Project's tokens based on amount funded\\r\\n     * @notice assume the Project token is already deployed\\r\\n     *\\r\\n     * SUGGESTION: We can mint the relevant project tokens here and issue it to investor\\r\\n     */\\r\\n    function claimTokens() public isState(State.SUCCESS) returns (bool) {\\r\\n        if (contributedFunds[msg.sender] == 0) revert Project__FundsNotGiven();\\r\\n\\r\\n        uint tokens = (contributedFunds[msg.sender] /\\r\\n            goalAmount[s_fundingRound]) * tokensToIssue[s_fundingRound];\\r\\n        contributedFunds[msg.sender] = 0;\\r\\n\\r\\n        IERC20(i_token).transfer(msg.sender, tokens);\\r\\n        emit ClaimTokens(msg.sender, tokens);\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    function getRefund() public isState(State.EXPIRED) returns (bool) {\\r\\n        if (block.timestamp < raiseBy[s_fundingRound])\\r\\n            revert Project__FundingNotExpired();\\r\\n        if (contributedFunds[msg.sender] == 0) revert Project__FundsNotGiven();\\r\\n\\r\\n        uint amountToRefund = contributedFunds[msg.sender];\\r\\n        (bool callSuccess, ) = msg.sender.call{value: amountToRefund}(\\\"\\\");\\r\\n        if (!callSuccess) revert Project__FailedToSendFunds();\\r\\n\\r\\n        contributedFunds[msg.sender] = 0;\\r\\n        s_currentBalance -= amountToRefund;\\r\\n        emit AmountRefunded(msg.sender, amountToRefund);\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    function getState() public view returns (State) {\\r\\n        return s_state;\\r\\n    }\\r\\n\\r\\n    function getDetails()\\r\\n        public\\r\\n        view\\r\\n        returns (\\r\\n            address payable projectStarter,\\r\\n            string memory projectTitle,\\r\\n            string memory projectDescription,\\r\\n            uint projectId,\\r\\n            uint amountToRaise,\\r\\n            uint deadline,\\r\\n            uint amountRaised,\\r\\n            uint fundingRound,\\r\\n            State currentState\\r\\n        )\\r\\n    {\\r\\n        projectStarter = i_creator;\\r\\n        projectTitle = s_title;\\r\\n        projectDescription = s_description;\\r\\n        projectId = i_id;\\r\\n        amountToRaise = goalAmount[s_fundingRound];\\r\\n        deadline = raiseBy[s_fundingRound];\\r\\n        amountRaised = s_currentBalance;\\r\\n        fundingRound = s_fundingRound;\\r\\n        currentState = s_state;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x818147713ea115dfc31a578e1a105f29c84c9d7ea84dfc21dc92781f53a63b70\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60e06040526005805460ff191660031790553480156200001e57600080fd5b506040516200149238038062001492833981016040819052620000419162000289565b6200004c3362000174565b336080526001600160a01b03861660a05260016200006b8482620003bf565b5060c085905260026200007f8382620003bf565b506200008d816018620004a1565b6200009b90610e10620004a1565b620000a79042620004c1565b60008080527fec8156718a8372b1db44bb411437d0870f3e3790d4a08526d024ce1b0b668f6b919091556005805460ff1916905560038190557f6d5257204ebe7d88fd91ae87941cb2dd9d8062b64ae5a2bd2d28ec40b9fbf6df8590556008602090815260647f5eff886ea0ce6ca488a3d6e336d6c0f75f46d19b42c06ce5ee98e42c96d256c75560049190915560405130815286917f3c831dcf6fd0b80fe93c3ee5d9557ada5a592ba10c1dbe75b71be141107d60a5910160405180910390a2505050505050620004d7565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052604160045260246000fd5b600082601f830112620001ec57600080fd5b81516001600160401b0380821115620002095762000209620001c4565b604051601f8301601f19908116603f01168101908282118183101715620002345762000234620001c4565b816040528381526020925086838588010111156200025157600080fd5b600091505b8382101562000275578582018301518183018401529082019062000256565b600093810190920192909252949350505050565b60008060008060008060c08789031215620002a357600080fd5b86516001600160a01b0381168114620002bb57600080fd5b6020880151604089015160608a015192985090965094506001600160401b0380821115620002e857600080fd5b620002f68a838b01620001da565b945060808901519150808211156200030d57600080fd5b506200031c89828a01620001da565b92505060a087015190509295509295509295565b600181811c908216806200034557607f821691505b6020821081036200036657634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115620003ba57600081815260208120601f850160051c81016020861015620003955750805b601f850160051c820191505b81811015620003b657828155600101620003a1565b5050505b505050565b81516001600160401b03811115620003db57620003db620001c4565b620003f381620003ec845462000330565b846200036c565b602080601f8311600181146200042b5760008415620004125750858301515b600019600386901b1c1916600185901b178555620003b6565b600085815260208120601f198616915b828110156200045c578886015182559484019460019091019084016200043b565b50858210156200047b5787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b634e487b7160e01b600052601160045260246000fd5b8082028115828204841417620004bb57620004bb6200048b565b92915050565b80820180821115620004bb57620004bb6200048b565b60805160a05160c051610f536200053f600039600081816102d5015281816106d30152818161077f0152610bb00152600081816102aa01528181610423015281816106b0015261075c01526000818161081e015281816108fa0152610a730152610f536000f3fe6080604052600436106100bc5760003560e01c8063b2d5ae4411610074578063d7bb99ba1161004e578063d7bb99ba146101ad578063f2fde38b146101b5578063fbbf93a0146101d557600080fd5b8063b2d5ae441461016e578063bd96fae714610183578063c20524031461019857600080fd5b806348c54b9d116100a557806348c54b9d1461010c578063715018a6146101315780638da5cb5b1461014657600080fd5b80631865c57d146100c157806319aea115146100ea575b600080fd5b3480156100cd57600080fd5b5060055460ff166040516100e19190610d22565b60405180910390f35b3480156100f657600080fd5b5061010a610105366004610d36565b6101ff565b005b34801561011857600080fd5b50610121610328565b60405190151581526020016100e1565b34801561013d57600080fd5b5061010a6104cf565b34801561015257600080fd5b506000546040516001600160a01b0390911681526020016100e1565b34801561017a57600080fd5b506101216104e3565b34801561018f57600080fd5b5061010a610676565b3480156101a457600080fd5b506101216107c9565b61010a6108b8565b3480156101c157600080fd5b5061010a6101d0366004610d62565b6109d1565b3480156101e157600080fd5b506101ea610a63565b6040516100e199989796959493929190610dd8565b610207610c28565b60038060055460ff16600381111561022157610221610cea565b1461023f5760405163f383ec1960e01b815260040160405180910390fd5b6001600360008282546102529190610e62565b909155505060038054600090815260086020908152604080832088905583548352600782528083208790558354835260098252918290208590556005805460ff191690559154815190815291820186905281018390527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316907f0000000000000000000000000000000000000000000000000000000000000000907f753b8d108e14f127257005d564a8287f99943fc30306134452cf4cad0bb5dcb39060600160405180910390a350505050565b600060018060055460ff16600381111561034457610344610cea565b146103625760405163f383ec1960e01b815260040160405180910390fd5b33600090815260066020526040812054900361039157604051632a022d0f60e11b815260040160405180910390fd5b600354600090815260076020908152604080832054600883528184205433855260069093529083205490916103c591610e75565b6103cf9190610e97565b3360008181526006602052604080822091909155517fa9059cbb0000000000000000000000000000000000000000000000000000000081526004810191909152602481018290529091506001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000169063a9059cbb906044016020604051808303816000875af115801561046c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906104909190610eae565b5060405181815233907f4d7f917f6b905f28ba5297e6c224a6cfec20ac6a3698a55b412d30b95ad25d2f9060200160405180910390a260019250505090565b6104d7610c28565b6104e16000610c82565b565b600060028060055460ff1660038111156104ff576104ff610cea565b1461051d5760405163f383ec1960e01b815260040160405180910390fd5b600354600090815260096020526040902054421015610568576040517f9af5028d00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b33600090815260066020526040812054900361059757604051632a022d0f60e11b815260040160405180910390fd5b3360008181526006602052604080822054905190929083908381818185875af1925050503d80600081146105e7576040519150601f19603f3d011682016040523d82523d6000602084013e6105ec565b606091505b505090508061060e5760405163f68aaf4160e01b815260040160405180910390fd5b33600090815260066020526040812081905560048054849290610632908490610ed0565b909155505060405182815233907f7ab855409e27a3b361adc9ebbc0750f5efb6d4594be28fef73c314d86d13a7f79060200160405180910390a26001935050505090565b60035460009081526008602052604090205460045410610723576005805460ff191660011790556003546040519081526001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016907f0000000000000000000000000000000000000000000000000000000000000000907fa39ae0d7691252825674f6236b141740ed91074f3d797e104266d0b51ff18a68906020015b60405180910390a3565b6003546000908152600960205260409020544211156104e1576005805460ff191660021790556003546040519081526001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016907f0000000000000000000000000000000000000000000000000000000000000000907fbc000f0d278d68c57829609b564a0212ef66a6062eb8ed49f97960744f8f214790602001610719565b60006107d3610c28565b60018060055460ff1660038111156107ed576107ed610cea565b1461080b5760405163f383ec1960e01b815260040160405180910390fd5b6004546040516000916001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016918381818185875af1925050503d8060008114610877576040519150601f19603f3d011682016040523d82523d6000602084013e61087c565b606091505b505090508061089e5760405163f68aaf4160e01b815260040160405180910390fd5b50506000600455506005805460ff19166003179055600190565b60008060055460ff1660038111156108d2576108d2610cea565b146108f05760405163f383ec1960e01b815260040160405180910390fd5b6001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000163303610952576040517fd39b9cf600000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b3360009081526006602052604081208054349290610971908490610e62565b92505081905550346004600082825461098a9190610e62565b9091555050604051348152309033907f37be9bdbd3d0fa9f42e06daf81145e35769daee2a65754d3986d0daf9899a7d69060200160405180910390a36109ce610676565b50565b6109d9610c28565b6001600160a01b038116610a5a5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f646472657373000000000000000000000000000000000000000000000000000060648201526084015b60405180910390fd5b6109ce81610c82565b60006060806000806000806000807f0000000000000000000000000000000000000000000000000000000000000000985060018054610aa190610ee3565b80601f0160208091040260200160405190810160405280929190818152602001828054610acd90610ee3565b8015610b1a5780601f10610aef57610100808354040283529160200191610b1a565b820191906000526020600020905b815481529060010190602001808311610afd57829003601f168201915b5050505050975060028054610b2e90610ee3565b80601f0160208091040260200160405190810160405280929190818152602001828054610b5a90610ee3565b8015610ba75780601f10610b7c57610100808354040283529160200191610ba7565b820191906000526020600020905b815481529060010190602001808311610b8a57829003601f168201915b505050505096507f0000000000000000000000000000000000000000000000000000000000000000955060086000600354815260200190815260200160002054945060096000600354815260200190815260200160002054935060045492506003549150600560009054906101000a900460ff169050909192939495969798565b6000546001600160a01b031633146104e15760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610a51565b600080546001600160a01b038381167fffffffffffffffffffffffff0000000000000000000000000000000000000000831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052602160045260246000fd5b60048110610d1e57634e487b7160e01b600052602160045260246000fd5b9052565b60208101610d308284610d00565b92915050565b600080600060608486031215610d4b57600080fd5b505081359360208301359350604090920135919050565b600060208284031215610d7457600080fd5b81356001600160a01b0381168114610d8b57600080fd5b9392505050565b6000815180845260005b81811015610db857602081850181015186830182015201610d9c565b506000602082860101526020601f19601f83011685010191505092915050565b60006101206001600160a01b038c168352806020840152610dfb8184018c610d92565b90508281036040840152610e0f818b610d92565b9150508760608301528660808301528560a08301528460c08301528360e0830152610e3e610100830184610d00565b9a9950505050505050505050565b634e487b7160e01b600052601160045260246000fd5b80820180821115610d3057610d30610e4c565b600082610e9257634e487b7160e01b600052601260045260246000fd5b500490565b8082028115828204841417610d3057610d30610e4c565b600060208284031215610ec057600080fd5b81518015158114610d8b57600080fd5b81810381811115610d3057610d30610e4c565b600181811c90821680610ef757607f821691505b602082108103610f1757634e487b7160e01b600052602260045260246000fd5b5091905056fea2646970667358221220f4af7d225085a96401e229cd0f6250a420c43facd48cc3b00378dbbd81c7135264736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600436106100bc5760003560e01c8063b2d5ae4411610074578063d7bb99ba1161004e578063d7bb99ba146101ad578063f2fde38b146101b5578063fbbf93a0146101d557600080fd5b8063b2d5ae441461016e578063bd96fae714610183578063c20524031461019857600080fd5b806348c54b9d116100a557806348c54b9d1461010c578063715018a6146101315780638da5cb5b1461014657600080fd5b80631865c57d146100c157806319aea115146100ea575b600080fd5b3480156100cd57600080fd5b5060055460ff166040516100e19190610d22565b60405180910390f35b3480156100f657600080fd5b5061010a610105366004610d36565b6101ff565b005b34801561011857600080fd5b50610121610328565b60405190151581526020016100e1565b34801561013d57600080fd5b5061010a6104cf565b34801561015257600080fd5b506000546040516001600160a01b0390911681526020016100e1565b34801561017a57600080fd5b506101216104e3565b34801561018f57600080fd5b5061010a610676565b3480156101a457600080fd5b506101216107c9565b61010a6108b8565b3480156101c157600080fd5b5061010a6101d0366004610d62565b6109d1565b3480156101e157600080fd5b506101ea610a63565b6040516100e199989796959493929190610dd8565b610207610c28565b60038060055460ff16600381111561022157610221610cea565b1461023f5760405163f383ec1960e01b815260040160405180910390fd5b6001600360008282546102529190610e62565b909155505060038054600090815260086020908152604080832088905583548352600782528083208790558354835260098252918290208590556005805460ff191690559154815190815291820186905281018390527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316907f0000000000000000000000000000000000000000000000000000000000000000907f753b8d108e14f127257005d564a8287f99943fc30306134452cf4cad0bb5dcb39060600160405180910390a350505050565b600060018060055460ff16600381111561034457610344610cea565b146103625760405163f383ec1960e01b815260040160405180910390fd5b33600090815260066020526040812054900361039157604051632a022d0f60e11b815260040160405180910390fd5b600354600090815260076020908152604080832054600883528184205433855260069093529083205490916103c591610e75565b6103cf9190610e97565b3360008181526006602052604080822091909155517fa9059cbb0000000000000000000000000000000000000000000000000000000081526004810191909152602481018290529091506001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000169063a9059cbb906044016020604051808303816000875af115801561046c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906104909190610eae565b5060405181815233907f4d7f917f6b905f28ba5297e6c224a6cfec20ac6a3698a55b412d30b95ad25d2f9060200160405180910390a260019250505090565b6104d7610c28565b6104e16000610c82565b565b600060028060055460ff1660038111156104ff576104ff610cea565b1461051d5760405163f383ec1960e01b815260040160405180910390fd5b600354600090815260096020526040902054421015610568576040517f9af5028d00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b33600090815260066020526040812054900361059757604051632a022d0f60e11b815260040160405180910390fd5b3360008181526006602052604080822054905190929083908381818185875af1925050503d80600081146105e7576040519150601f19603f3d011682016040523d82523d6000602084013e6105ec565b606091505b505090508061060e5760405163f68aaf4160e01b815260040160405180910390fd5b33600090815260066020526040812081905560048054849290610632908490610ed0565b909155505060405182815233907f7ab855409e27a3b361adc9ebbc0750f5efb6d4594be28fef73c314d86d13a7f79060200160405180910390a26001935050505090565b60035460009081526008602052604090205460045410610723576005805460ff191660011790556003546040519081526001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016907f0000000000000000000000000000000000000000000000000000000000000000907fa39ae0d7691252825674f6236b141740ed91074f3d797e104266d0b51ff18a68906020015b60405180910390a3565b6003546000908152600960205260409020544211156104e1576005805460ff191660021790556003546040519081526001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016907f0000000000000000000000000000000000000000000000000000000000000000907fbc000f0d278d68c57829609b564a0212ef66a6062eb8ed49f97960744f8f214790602001610719565b60006107d3610c28565b60018060055460ff1660038111156107ed576107ed610cea565b1461080b5760405163f383ec1960e01b815260040160405180910390fd5b6004546040516000916001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016918381818185875af1925050503d8060008114610877576040519150601f19603f3d011682016040523d82523d6000602084013e61087c565b606091505b505090508061089e5760405163f68aaf4160e01b815260040160405180910390fd5b50506000600455506005805460ff19166003179055600190565b60008060055460ff1660038111156108d2576108d2610cea565b146108f05760405163f383ec1960e01b815260040160405180910390fd5b6001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000163303610952576040517fd39b9cf600000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b3360009081526006602052604081208054349290610971908490610e62565b92505081905550346004600082825461098a9190610e62565b9091555050604051348152309033907f37be9bdbd3d0fa9f42e06daf81145e35769daee2a65754d3986d0daf9899a7d69060200160405180910390a36109ce610676565b50565b6109d9610c28565b6001600160a01b038116610a5a5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f646472657373000000000000000000000000000000000000000000000000000060648201526084015b60405180910390fd5b6109ce81610c82565b60006060806000806000806000807f0000000000000000000000000000000000000000000000000000000000000000985060018054610aa190610ee3565b80601f0160208091040260200160405190810160405280929190818152602001828054610acd90610ee3565b8015610b1a5780601f10610aef57610100808354040283529160200191610b1a565b820191906000526020600020905b815481529060010190602001808311610afd57829003601f168201915b5050505050975060028054610b2e90610ee3565b80601f0160208091040260200160405190810160405280929190818152602001828054610b5a90610ee3565b8015610ba75780601f10610b7c57610100808354040283529160200191610ba7565b820191906000526020600020905b815481529060010190602001808311610b8a57829003601f168201915b505050505096507f0000000000000000000000000000000000000000000000000000000000000000955060086000600354815260200190815260200160002054945060096000600354815260200190815260200160002054935060045492506003549150600560009054906101000a900460ff169050909192939495969798565b6000546001600160a01b031633146104e15760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610a51565b600080546001600160a01b038381167fffffffffffffffffffffffff0000000000000000000000000000000000000000831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052602160045260246000fd5b60048110610d1e57634e487b7160e01b600052602160045260246000fd5b9052565b60208101610d308284610d00565b92915050565b600080600060608486031215610d4b57600080fd5b505081359360208301359350604090920135919050565b600060208284031215610d7457600080fd5b81356001600160a01b0381168114610d8b57600080fd5b9392505050565b6000815180845260005b81811015610db857602081850181015186830182015201610d9c565b506000602082860101526020601f19601f83011685010191505092915050565b60006101206001600160a01b038c168352806020840152610dfb8184018c610d92565b90508281036040840152610e0f818b610d92565b9150508760608301528660808301528560a08301528460c08301528360e0830152610e3e610100830184610d00565b9a9950505050505050505050565b634e487b7160e01b600052601160045260246000fd5b80820180821115610d3057610d30610e4c565b600082610e9257634e487b7160e01b600052601260045260246000fd5b500490565b8082028115828204841417610d3057610d30610e4c565b600060208284031215610ec057600080fd5b81518015158114610d8b57600080fd5b81810381811115610d3057610d30610e4c565b600181811c90821680610ef757607f821691505b602082108103610f1757634e487b7160e01b600052602260045260246000fd5b5091905056fea2646970667358221220f4af7d225085a96401e229cd0f6250a420c43facd48cc3b00378dbbd81c7135264736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "claimTokens()": {
+        "details": "investor recieves a proportion of Project's tokens based on amount funded"
+      },
+      "contribute()": {
+        "details": "gather funds to meet the goal before deadline. Creator is not allowed to fund his project. For intial rounds, funders can only give a certain max amount which would be change to any amount after certain number of rounds"
+      },
+      "initiateFundingRound(uint256,uint256,uint256)": {
+        "details": "start successive funding rounds after majority funders agree to it"
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "claimTokens()": {
+        "notice": "assume the Project token is already deployed SUGGESTION: We can mint the relevant project tokens here and issue it to investor"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 7,
+        "contract": "contracts/Project.sol:Project",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 864,
+        "contract": "contracts/Project.sol:Project",
+        "label": "s_title",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 866,
+        "contract": "contracts/Project.sol:Project",
+        "label": "s_description",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 868,
+        "contract": "contracts/Project.sol:Project",
+        "label": "s_fundingRound",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 870,
+        "contract": "contracts/Project.sol:Project",
+        "label": "s_currentBalance",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 875,
+        "contract": "contracts/Project.sol:Project",
+        "label": "s_state",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_enum(State)850"
+      },
+      {
+        "astId": 879,
+        "contract": "contracts/Project.sol:Project",
+        "label": "contributedFunds",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 883,
+        "contract": "contracts/Project.sol:Project",
+        "label": "tokensToIssue",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      },
+      {
+        "astId": 887,
+        "contract": "contracts/Project.sol:Project",
+        "label": "goalAmount",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      },
+      {
+        "astId": 891,
+        "contract": "contracts/Project.sol:Project",
+        "label": "raiseBy",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_enum(State)850": {
+        "encoding": "inplace",
+        "label": "enum Project.State",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_uint256,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import React from "react";
 import Button from "../../common/Button";
+import { Web3Button, useAccount } from "@web3modal/react";
+
 const Header = () => {
+  const { account } = useAccount();
   return (
     <div className="w-full">
       <div className="py-4 px-6">
@@ -10,15 +13,14 @@ const Header = () => {
               VC Dao
             </h2>
           </div>
+
           <div className="flex items-center gap-x-4">
             <div>
               <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">
                 Daos
               </p>
             </div>
-            <div>
-              <Button text="Connect Wallet" size="sm" withBg />
-            </div>
+            <Web3Button />
           </div>
         </div>
       </div>

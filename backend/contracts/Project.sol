@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
 error Project__IncorrectState();
@@ -11,7 +12,7 @@ error Project__FundsNotGiven();
 error Project__FailedToSendFunds();
 error Project__AmountExceedsLimit();
 
-contract Project {
+contract Project is Ownable {
     enum State {
         FUNDRAISING,
         SUCCESS,
@@ -21,22 +22,19 @@ contract Project {
 
     event ProjectStart(uint indexed id, address project_address);
 
-    // For testing pruposes. Will be changed to a higher number
-    uint constant MIN_FUNDERS = 2;
     address payable private immutable i_creator;
     address private immutable i_token;
     uint private immutable i_id;
-    uint private immutable i_tokensToIssue;
     string private s_title;
     string private s_description;
     uint private s_fundingRound;
-    uint private s_goalAmount;
-    uint private s_rasieBy;
     uint private s_currentBalance;
-    uint private s_maxAmountToInvest;
     State private s_state = State.CLOSED;
 
     mapping(address => uint) contributedFunds;
+    mapping(uint => uint) tokensToIssue;
+    mapping(uint => uint) goalAmount;
+    mapping(uint => uint) raiseBy;
 
     event ClaimTokens(address indexed to, uint amount);
 
@@ -52,6 +50,20 @@ contract Project {
         uint indexed projectId,
         address indexed projectToken,
         uint round
+    );
+
+    event FundingExpired(
+        uint indexed projectId,
+        address indexed projectToken,
+        uint round
+    );
+
+    event FundingInitiated(
+        uint indexed projectId,
+        address indexed projectToken,
+        uint round,
+        uint goalAmount,
+        uint fundRaisingDeadline
     );
 
     modifier isState(State _state) {
@@ -71,29 +83,27 @@ contract Project {
         uint fundRaisingDeadline
     ) {
         i_creator = payable(creator);
+        // i_creator = payable(msg.sender);
         i_token = token;
-        i_tokensToIssue = tokenToIssue;
         s_title = title;
         i_id = id;
         s_description = description;
-        s_rasieBy = block.timestamp + fundRaisingDeadline*24*3600;
+        raiseBy[0] = block.timestamp + fundRaisingDeadline * 24 * 3600;
         s_state = State.FUNDRAISING;
-        s_fundingRound = 1;
-        s_goalAmount = s_fundingRound * 1000;
+        s_fundingRound = 0;
+        tokensToIssue[0] = tokenToIssue;
+        goalAmount[0] = 100;
         s_currentBalance = 0;
-        s_maxAmountToInvest = Math.ceilDiv(s_goalAmount, MIN_FUNDERS);
         emit ProjectStart(id, address(this));
     }
 
     /**
      * @dev gather funds to meet the goal before deadline. Creator is not allowed to fund his project. For intial rounds, funders can only give a certain max
-     * amount which would be changed to any amount after certain number of rounds
+     * amount which would be change to any amount after certain number of rounds
      */
     function contribute() public payable isState(State.FUNDRAISING) {
         if (msg.sender == i_creator)
             revert Project__CreatorCannotFundHisProject();
-        if (contributedFunds[msg.sender] + msg.value > s_maxAmountToInvest)
-            revert Project__AmountExceedsLimit();
 
         contributedFunds[msg.sender] += msg.value;
         s_currentBalance += msg.value;
@@ -102,20 +112,38 @@ contract Project {
     }
 
     function checkIfFundingCompletedOrExpired() public {
-        if (s_currentBalance >= s_goalAmount) {
+        if (s_currentBalance >= goalAmount[s_fundingRound]) {
             s_state = State.SUCCESS;
             emit FundingSuccess(i_id, i_token, s_fundingRound);
-        } else if (block.timestamp > s_rasieBy) {
+        } else if (block.timestamp > raiseBy[s_fundingRound]) {
             s_state = State.EXPIRED;
+            emit FundingExpired(i_id, i_token, s_fundingRound);
         }
     }
 
     /**
      * @dev start successive funding rounds after majority funders agree to it
      */
-    function initiateFundingRound() public isState(State.CLOSED) {}
+    function initiateFundingRound(
+        uint amountToRaise,
+        uint tokenToIssue,
+        uint fundRaisingDeadline
+    ) public onlyOwner isState(State.CLOSED) {
+        s_fundingRound += 1;
+        goalAmount[s_fundingRound] = amountToRaise;
+        tokensToIssue[s_fundingRound] = tokenToIssue;
+        raiseBy[s_fundingRound] = fundRaisingDeadline;
+        s_state = State.FUNDRAISING;
+        emit FundingInitiated(
+            i_id,
+            i_token,
+            s_fundingRound,
+            amountToRaise,
+            fundRaisingDeadline
+        );
+    }
 
-    function payOut() internal isState(State.SUCCESS) returns (bool) {
+    function payOut() public onlyOwner isState(State.SUCCESS) returns (bool) {
         (bool callSuccess, ) = i_creator.call{value: s_currentBalance}("");
         if (!callSuccess) revert Project__FailedToSendFunds();
 
@@ -133,8 +161,8 @@ contract Project {
     function claimTokens() public isState(State.SUCCESS) returns (bool) {
         if (contributedFunds[msg.sender] == 0) revert Project__FundsNotGiven();
 
-        uint tokens = (contributedFunds[msg.sender] / s_goalAmount) *
-            i_tokensToIssue;
+        uint tokens = (contributedFunds[msg.sender] /
+            goalAmount[s_fundingRound]) * tokensToIssue[s_fundingRound];
         contributedFunds[msg.sender] = 0;
 
         IERC20(i_token).transfer(msg.sender, tokens);
@@ -143,7 +171,8 @@ contract Project {
     }
 
     function getRefund() public isState(State.EXPIRED) returns (bool) {
-        if (block.timestamp < s_rasieBy) revert Project__FundingNotExpired();
+        if (block.timestamp < raiseBy[s_fundingRound])
+            revert Project__FundingNotExpired();
         if (contributedFunds[msg.sender] == 0) revert Project__FundsNotGiven();
 
         uint amountToRefund = contributedFunds[msg.sender];
@@ -156,7 +185,7 @@ contract Project {
         return true;
     }
 
-    function getState() public view returns(State) {
+    function getState() public view returns (State) {
         return s_state;
     }
 
@@ -168,7 +197,7 @@ contract Project {
             string memory projectTitle,
             string memory projectDescription,
             uint projectId,
-            uint goalAmount,
+            uint amountToRaise,
             uint deadline,
             uint amountRaised,
             uint fundingRound,
@@ -179,8 +208,8 @@ contract Project {
         projectTitle = s_title;
         projectDescription = s_description;
         projectId = i_id;
-        goalAmount = s_goalAmount;
-        deadline = s_rasieBy;
+        amountToRaise = goalAmount[s_fundingRound];
+        deadline = raiseBy[s_fundingRound];
         amountRaised = s_currentBalance;
         fundingRound = s_fundingRound;
         currentState = s_state;

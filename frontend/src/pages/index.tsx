@@ -3,10 +3,10 @@ import AfterFundingHomeScreen from "../components/AfterFundingHomeScreen";
 import InitialHomeScreen from "../components/InitialHomeScreen";
 
 const Home = () => {
-  const [stateChange, setStateChange] = useState(true);
+  const [stateChange, setStateChange] = useState(false);
   return (
     <Fragment>
-      {setStateChange ? <AfterFundingHomeScreen /> : <InitialHomeScreen />}
+      {stateChange ? <AfterFundingHomeScreen /> : <InitialHomeScreen />}
     </Fragment>
   );
 };
