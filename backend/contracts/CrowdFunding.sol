@@ -31,7 +31,7 @@ contract CrowdFunding is Ownable {
         string memory title,
         string memory description,
         uint durationInDays
-    ) public onlyOwner {
+    ) public {
         uint fundRaisingDeadline = block.timestamp +
             (durationInDays * 24 * 3600);
         Project project = new Project(

@@ -1,12 +1,19 @@
-import Head from "next/head";
+import { Fragment, useState } from "react";
+import AfterFundingHomeScreen from "../components/AfterFundingHomeScreen";
 import InitialHomeScreen from "../components/InitialHomeScreen";
-import Footer from "../components/Layout/Footer";
 
 const Home = () => {
+  const [stateChange, setStateChange] = useState(true);
   return (
+<<<<<<< HEAD
     <>
       <InitialHomeScreen />
     </>
+=======
+    <Fragment>
+      {setStateChange ? <AfterFundingHomeScreen /> : <InitialHomeScreen />}
+    </Fragment>
+>>>>>>> dbfe4db804261805a563dbb3c7df40467a87d450
   );
 };
 

@@ -1,15 +1,26 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> dbfe4db804261805a563dbb3c7df40467a87d450
 import Countdown from "./Countdown";
 import { ethers } from "ethers";
 import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
+import Button from "../common/Button";
+import Footer from "../Layout/Footer";
 
 const InitialHomeScreen = () => {
+<<<<<<< HEAD
   const vctoken = require("../../../../backend/deployments/polygon/GovernanceToken.json");
   const crowdfund = require("../../../../backend/deployments/polygon/CrowdFunding.json");
   useEffect(()=> {
 
   });
+=======
+  const [stateChange, setStateChange] = useState(false);
+  const [matic, setMatic] = useState("");
+>>>>>>> dbfe4db804261805a563dbb3c7df40467a87d450
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
   const NOW_IN_MS = new Date().getTime();
 
@@ -17,13 +28,17 @@ const InitialHomeScreen = () => {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
+<<<<<<< HEAD
       <CircularProgressBarWithLogo percentage={40} />
+=======
+      <CircularProgressBarWithLogo percentage={80} />
+>>>>>>> dbfe4db804261805a563dbb3c7df40467a87d450
 
       <div className="flex items-center gap-2 mt-4">
         <div className="w-6 h-6">
           <img src="/assets/images/eth.svg" className="w-full h-full" />
         </div>
-        <div className="uppercase text-lg font-medium text-gray-600">
+        <div className="uppercase text-lg font-medium text-gray-500">
           100 eth
         </div>
       </div>
@@ -33,10 +48,32 @@ const InitialHomeScreen = () => {
       </div>
 
       <div>
-        <button className="text-lg font-medium tracking-wide capitalize bg-black text-white h-12 px-14 rounded-lg cursor-pointer border-0 transition-text hover:border-2 hover:border-solid hover:border-black hover:bg-white hover:text-black">
-          invest now
-        </button>
+        {stateChange ? (
+          <div className="flex flex-col gap-y-4">
+            <div>
+              <input
+                placeholder="Matic"
+                value={matic}
+                onChange={(e) => setMatic(e.currentTarget.value)}
+                className="pl-2 border-[1px] outline-none h-10 border-[#dcdfe6] w-full border-solid text-gray-600 text-base rounded-sm box-border"
+              />
+            </div>
+            <div className="space-x-3">
+              <Button size="md" text="Pledge" withBg />
+              <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
+            </div>
+          </div>
+        ) : (
+          <Button
+            size="md"
+            text="Invest Now"
+            withBg
+            onClick={() => setStateChange(true)}
+          />
+        )}
       </div>
+
+      <Footer bottom />
     </div>
   );
 };

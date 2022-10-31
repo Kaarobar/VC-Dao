@@ -4,14 +4,15 @@ import Header from "./Header";
 
 interface Props {
   children: ReactNode;
+  bottom?: boolean
 }
 
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ children, bottom }) => {
   return (
     <div>
       <Header />
       {children}
-      <Footer />
+      <Footer bottom={bottom} />
     </div>
   );
 };

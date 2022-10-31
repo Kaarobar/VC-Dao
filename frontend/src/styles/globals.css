@@ -37,3 +37,6 @@
   margin: auto;
   padding: 0 1rem;
 }
+.container.small {
+  max-width: 500px;
+}

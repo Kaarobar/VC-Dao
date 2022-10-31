@@ -11,14 +11,14 @@ const CircularProgressBarWithLogo: FC<{ percentage: number }> = ({
         strokeWidth={3}
         styles={{
           trail: {
-            stroke: "rgb(209 213 219)",
+            stroke: "rgb(243 244 246)",
           },
           path: {
-            stroke: `rgb(23, 23, 23, ${percentage / 100})`,
+            stroke: `rgb(31, 41, 55, ${percentage / 100})`,
           },
         }}
       >
-        <div className="h-40 w-40 bg-black rounded-full flex items-center justify-center">
+        <div className="h-40 w-40 bg-gray-800 rounded-full flex items-center justify-center">
           <h1 className="text-white">VC Dao</h1>
         </div>
       </CircularProgressbarWithChildren>
