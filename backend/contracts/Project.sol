@@ -74,7 +74,7 @@ contract Project is Ownable {
     }
 
     constructor(
-        // address creator,
+        address creator,
         address token,
         uint id,
         uint tokenToIssue,
@@ -82,8 +82,8 @@ contract Project is Ownable {
         string memory description,
         uint fundRaisingDeadline
     ) {
-        // i_creator = payable(creator);
-        i_creator = payable(msg.sender);
+        i_creator = payable(creator);
+        // i_creator = payable(msg.sender);
         i_token = token;
         s_title = title;
         i_id = id;
