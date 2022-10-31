@@ -46,7 +46,7 @@ export async function propose(
   const proposalSnapShot = await governor.proposalSnapshot(proposalId);
   const proposalDeadline = await governor.proposalDeadline(proposalId);
 
-  storeProposalId(proposalId);
+  // storeProposalId(proposalId);
 
   // The state of the proposal. 1 is not passed. 0 is passed.
   console.log(`Current Proposal State: ${proposalState}`);
@@ -56,19 +56,19 @@ export async function propose(
   console.log(`Current Proposal Deadline: ${proposalDeadline}`);
 }
 
-function storeProposalId(proposalId: any) {
-  const chainId = network.config.chainId!.toString();
-  let proposals: any;
+// function storeProposalId(proposalId: any) {
+//   const chainId = network.config.chainId!.toString();
+//   let proposals: any;
 
-  if (fs.existsSync(proposalsFile)) {
-    proposals = JSON.parse(fs.readFileSync(proposalsFile, "utf8"));
-  } else {
-    proposals = {};
-    proposals[chainId] = [];
-  }
-  proposals[chainId].push(proposalId.toString());
-  fs.writeFileSync(proposalsFile, JSON.stringify(proposals), "utf8");
-}
+//   if (fs.existsSync(proposalsFile)) {
+//     proposals = JSON.parse(fs.readFileSync(proposalsFile, "utf8"));
+//   } else {
+//     proposals = {};
+//     proposals[chainId] = [];
+//   }
+//   proposals[chainId].push(proposalId.toString());
+//   fs.writeFileSync(proposalsFile, JSON.stringify(proposals), "utf8");
+// }
 
 propose(ARGS, FUNC, PROPOSAL_DESCRIPTION)
   .then(() => process.exit(0))
