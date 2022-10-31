@@ -12,10 +12,9 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-x-4">
             <div>
-              <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">Daos</p>
-            </div>
-            <div>
-              <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">Proposals</p>
+              <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">
+                Daos
+              </p>
             </div>
             <div>
               <Button text="Connect Wallet" size="sm" withBg />
