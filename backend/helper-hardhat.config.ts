@@ -34,9 +34,9 @@ export const ARGS = [
   "0xf821D3365814a704e59D7165B3D4CCAa3dF65Ba7",
   "100000",
   "1",
-  "Hello World",
-  "Hello World!!!",
+  "Metaverse2",
+  "Mark Zingerburger2",
   "1",
 ];
 export const FUNC = "createProject";
-export const PROPOSAL_DESCRIPTION = "Proposal #1 Add VCDao project";
+export const PROPOSAL_DESCRIPTION = "Proposal #3 Add Meta1 project";
