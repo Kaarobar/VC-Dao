@@ -1,5 +1,7 @@
 export interface IProposal {
-    title: string;
-    desc: string;
-    
+  title: string;
+  desc: string;
+  noOfDaysDeadline: string;
+  tokenName: string;
+  tokenToBeIssued: string;
 }
