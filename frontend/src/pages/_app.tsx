@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
+    <>
       <Component {...pageProps} />
       <Web3Modal
         config={{
@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
           },
         }}
       />
-    </Layout>
+    </>
   );
 }
 

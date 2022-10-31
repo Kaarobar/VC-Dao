@@ -6,7 +6,7 @@ const Home = () => {
   const [stateChange, setStateChange] = useState(true);
   return (
     <Fragment>
-      {setStateChange ? <AfterFundingHomeScreen /> : <InitialHomeScreen />}
+      {stateChange ? <AfterFundingHomeScreen /> : <InitialHomeScreen />}
     </Fragment>
   );
 };
