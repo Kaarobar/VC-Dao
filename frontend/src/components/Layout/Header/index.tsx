@@ -13,10 +13,14 @@ const Header = () => {
               VC Dao
             </h2>
           </div>
-          <div>
-            {account.isConnected ? <h1>{account.address}</h1> : null}
+
+          <div className="flex items-center gap-x-4">
+            <div>
+              <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">
+                Daos
+              </p>
+            </div>
             <Web3Button />
-            {/* <Button text="Connect Wallet" size="sm" withBg /> */}
           </div>
         </div>
       </div>

@@ -2,11 +2,13 @@ import React, { FC } from "react";
 
 interface Props {
   size: "sm" | "md";
-  withBg: boolean;
   text: string;
+  withBg?: boolean;
+  onClick?: () => void;
+  disable?: boolean;
 }
 
-const Button: FC<Props> = ({ size, withBg, text }) => {
+const Button: FC<Props> = ({ size, withBg, text, onClick, disable }) => {
   return (
     <button
       className={`${
@@ -15,9 +17,13 @@ const Button: FC<Props> = ({ size, withBg, text }) => {
           : "py-3 px-6 h-12 min-w-[3rem]"
       } text-[15px] font-medium  ${
         withBg
-          ? "bg-gray-800 text-white"
+          ? disable
+            ? "bg-gray-700 text-white"
+            : "bg-gray-800 text-white"
           : "border-gray-800 border border-solid text-gray-800 bg-transparent"
       } rounded-sm cursor-pointer leading-5`}
+      onClick={onClick}
+      disabled={disable}
     >
       {text}
     </button>
