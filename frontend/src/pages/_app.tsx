@@ -9,9 +9,9 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
       <Web3Modal
         config={{
-          theme: "dark",
+          theme: "light",
           projectId: "649078fdef4a68556a17c9f9609fadec",
-          accentColor: "default",
+          accentColor: "blackWhite",
           ethereum: {
             appName: "vcDao",
             autoConnect: true,
