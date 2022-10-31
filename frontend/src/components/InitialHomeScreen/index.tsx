@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Countdown from "./Countdown";
 
 import "react-circular-progressbar/dist/styles.css";
@@ -7,6 +7,8 @@ import Button from "../common/Button";
 import Footer from "../Layout/Footer";
 
 const InitialHomeScreen = () => {
+  const [stateChange, setStateChange] = useState(false);
+  const [matic, setMatic] = useState("");
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
   const NOW_IN_MS = new Date().getTime();
 
@@ -30,9 +32,31 @@ const InitialHomeScreen = () => {
       </div>
 
       <div>
-        <Button size="md" text="Invest Now" withBg />
+        {stateChange ? (
+          <div className="flex flex-col gap-y-4">
+            <div>
+              <input
+                placeholder="Matic"
+                value={matic}
+                onChange={(e) => setMatic(e.currentTarget.value)}
+                className="pl-2 border-[1px] outline-none h-10 border-[#dcdfe6] w-full border-solid text-gray-600 text-base rounded-sm box-border"
+              />
+            </div>
+            <div className="space-x-3">
+              <Button size="md" text="Pledge" withBg />
+              <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
+            </div>
+          </div>
+        ) : (
+          <Button
+            size="md"
+            text="Invest Now"
+            withBg
+            onClick={() => setStateChange(true)}
+          />
+        )}
       </div>
-      
+
       <Footer bottom />
     </div>
   );
