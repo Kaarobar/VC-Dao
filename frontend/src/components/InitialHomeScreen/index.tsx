@@ -5,11 +5,14 @@ import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 import Button from "../common/Button";
 import Footer from "../Layout/Footer";
+import vctoken from "../../../../backend/deployments/polygon/GovernanceToken.json";
+import crowdfund from "../../../../backend/deployments/polygon/CrowdFunding.json";
+import { useAccount, useConnectModal } from "@web3modal/react";
 
 const InitialHomeScreen = () => {
-  const vctoken = require("../../../../backend/deployments/polygon/GovernanceToken.json");
-  const crowdfund = require("../../../../backend/deployments/polygon/CrowdFunding.json");
-  useEffect(() => {});
+  const { isOpen, open } = useConnectModal();
+  const { account } = useAccount();
+
   const [stateChange, setStateChange] = useState(false);
   const [matic, setMatic] = useState("");
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
@@ -17,6 +20,15 @@ const InitialHomeScreen = () => {
 
   const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
 
+  const handleStateChange = () => {
+    if (account.isConnected) {
+      setStateChange(true);
+    } else {
+      if (!isOpen) {
+        open();
+      }
+    }
+  };
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <CircularProgressBarWithLogo percentage={80} />
@@ -55,7 +67,7 @@ const InitialHomeScreen = () => {
             size="md"
             text="Invest Now"
             withBg
-            onClick={() => setStateChange(true)}
+            onClick={handleStateChange}
           />
         )}
       </div>
