@@ -4,7 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 import Button from "../common/Button";
 import Footer from "../Layout/Footer";
-import { useAccount, useConnectModal, useContract, useProvider } from "@web3modal/react";
+import { useAccount, useConnectModal, useContract, useProvider, useSigner } from "@web3modal/react";
 import Pledge from "../../web3functions/functions";
 const project = require("../../../../backend/deployments/polygon/Project.json")
 
@@ -13,6 +13,7 @@ const InitialHomeScreen = () => {
   const { isOpen, open } = useConnectModal();
   const {account, isReady} = useAccount()
   const {provider } = useProvider()
+  const {data} = useSigner()
 
   const [stateChange, setStateChange] = useState(false);
   const [matic, setMatic] = useState("");
@@ -23,6 +24,7 @@ const InitialHomeScreen = () => {
 
   const handleStateChange = () => {
     if (account.isConnected) {
+      {console.log("Signer: ", data)}
       setStateChange(true);
       
     } else {
@@ -34,7 +36,7 @@ const InitialHomeScreen = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <CircularProgressBarWithLogo percentage={80} />
-
+      
       <div className="flex items-center gap-2 mt-4">
         <div className="w-6 h-6">
           <img src="/assets/images/eth.svg" className="w-full h-full" />
@@ -60,7 +62,7 @@ const InitialHomeScreen = () => {
               />
             </div>
             <div className="space-x-3">
-              <Button size="md" text="Pledge" withBg onClick={() =>Pledge(matic, provider, account, isReady)}/>
+              <Button size="md" text="Pledge" withBg onClick={() =>Pledge(matic, data, account, isReady)}/>
               <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
             </div>
           </div>

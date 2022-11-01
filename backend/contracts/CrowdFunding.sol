@@ -41,7 +41,8 @@ contract CrowdFunding is Ownable {
             toIssue,
             title,
             description,
-            fundRaisingDeadline
+            fundRaisingDeadline,
+            goalAmount
         );
         s_projects.push(project);
         currentProjId += 1;

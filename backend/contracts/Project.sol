@@ -31,7 +31,7 @@ contract Project is Ownable {
     uint private s_currentBalance;
     State private s_state = State.CLOSED;
 
-    mapping(address => uint) contributedFunds;
+    mapping(address => uint) public contributedFunds;
     mapping(uint => uint) tokensToIssue;
     mapping(uint => uint) goalAmount;
     mapping(uint => uint) raiseBy;
@@ -74,16 +74,16 @@ contract Project is Ownable {
     }
 
     constructor(
-        address creator,
+        address owner,
         address token,
         uint id,
         uint tokenToIssue,
         string memory title,
         string memory description,
-        uint fundRaisingDeadline
+        uint fundRaisingDeadline,
+        uint fundingNeeded
     ) {
-        i_creator = payable(creator);
-        // i_creator = payable(msg.sender);
+        i_creator = payable(owner);
         i_token = token;
         s_title = title;
         i_id = id;
@@ -91,8 +91,8 @@ contract Project is Ownable {
         raiseBy[0] = block.timestamp + fundRaisingDeadline * 24 * 3600;
         s_state = State.FUNDRAISING;
         s_fundingRound = 0;
-        tokensToIssue[0] = tokenToIssue;
-        goalAmount[0] = 100;
+        tokensToIssue[0] = tokenToIssue*10**18;
+        goalAmount[0] = fundingNeeded *10**18;
         s_currentBalance = 0;
         emit ProjectStart(id, address(this));
     }
@@ -104,6 +104,8 @@ contract Project is Ownable {
     function contribute() public payable isState(State.FUNDRAISING) {
         if (msg.sender == i_creator)
             revert Project__CreatorCannotFundHisProject();
+        (bool callSuccess, ) = payable(address(this)).call{value: msg.value}("");
+        require(callSuccess, "Not enough funds");
 
         contributedFunds[msg.sender] += msg.value;
         s_currentBalance += msg.value;
@@ -130,9 +132,9 @@ contract Project is Ownable {
         uint fundRaisingDeadline
     ) public onlyOwner isState(State.CLOSED) {
         s_fundingRound += 1;
-        goalAmount[s_fundingRound] = amountToRaise;
+        goalAmount[s_fundingRound] = amountToRaise * 10 **18;
         tokensToIssue[s_fundingRound] = tokenToIssue;
-        raiseBy[s_fundingRound] = fundRaisingDeadline;
+        raiseBy[s_fundingRound] = block.timestamp + fundRaisingDeadline*24*3600;
         s_state = State.FUNDRAISING;
         emit FundingInitiated(
             i_id,
