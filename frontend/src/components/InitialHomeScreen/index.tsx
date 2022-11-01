@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "./Countdown";
-import { ethers } from "ethers";
 import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 import Button from "../common/Button";
 import Footer from "../Layout/Footer";
-import vctoken from "../../../../backend/deployments/polygon/GovernanceToken.json";
-import crowdfund from "../../../../backend/deployments/polygon/CrowdFunding.json";
-import { useAccount, useConnectModal } from "@web3modal/react";
+import { useAccount, useConnectModal, useContract, useProvider } from "@web3modal/react";
+import Pledge from "../../web3functions/functions";
+const project = require("../../../../backend/deployments/polygon/Project.json")
+
 
 const InitialHomeScreen = () => {
   const { isOpen, open } = useConnectModal();
-  const { account } = useAccount();
+  const {account, isReady} = useAccount()
+  const {provider } = useProvider()
 
   const [stateChange, setStateChange] = useState(false);
   const [matic, setMatic] = useState("");
@@ -23,6 +24,7 @@ const InitialHomeScreen = () => {
   const handleStateChange = () => {
     if (account.isConnected) {
       setStateChange(true);
+      
     } else {
       if (!isOpen) {
         open();
@@ -58,7 +60,7 @@ const InitialHomeScreen = () => {
               />
             </div>
             <div className="space-x-3">
-              <Button size="md" text="Pledge" withBg />
+              <Button size="md" text="Pledge" withBg onClick={() =>Pledge(matic, provider, account, isReady)}/>
               <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
             </div>
           </div>

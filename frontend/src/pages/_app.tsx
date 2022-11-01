@@ -2,6 +2,7 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 import { Web3Modal } from "@web3modal/react";
 import Layout from "../components/Layout";
+import { chain } from "@wagmi/core";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,6 +16,9 @@ function MyApp({ Component, pageProps }) {
           ethereum: {
             appName: "vcDao",
             autoConnect: true,
+            chains: [
+              chain.polygonMumbai
+            ]
           },
         }}
       />

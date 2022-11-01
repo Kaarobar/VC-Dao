@@ -17,7 +17,8 @@ const deployVcDaoProject: DeployFunction = async function (
   log("----------------------------------------------------");
   log("Deploying VCDao and waiting for confirmations...");
   const args = [
-    "0xf821D3365814a704e59D7165B3D4CCAa3dF65Ba7",
+    deployer,
+    "0xDe2c53a21fdB512bc7624706d2E4039eeA015258",
     "0",
     "100000",
     "VCDao",
