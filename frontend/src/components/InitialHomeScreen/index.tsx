@@ -5,7 +5,7 @@ import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
 import Button from "../common/Button";
 import Footer from "../Layout/Footer";
 import { useAccount, useConnectModal, useContract, useProvider, useSigner } from "@web3modal/react";
-import Pledge from "../../web3functions/functions";
+import {Pledge, Details, contributedAmnt} from "../../web3functions/functions";
 const project = require("../../../../backend/deployments/polygon/Project.json")
 
 
@@ -17,19 +17,24 @@ const InitialHomeScreen = () => {
 
   const [stateChange, setStateChange] = useState(false);
   const [matic, setMatic] = useState("");
+  const [contributed, setContributed] = useState("0")
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
   const NOW_IN_MS = new Date().getTime();
 
   const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+  useEffect(()=>{
+    Details();
+  })
 
   const handleStateChange = () => {
     if (account.isConnected) {
       {console.log("Signer: ", data)}
       setStateChange(true);
-      
+      //contributedAmnt(account.address, setContributed)
     } else {
       if (!isOpen) {
         open();
+        //contributedAmnt(account.address, setContributed)
       }
     }
   };
@@ -62,7 +67,7 @@ const InitialHomeScreen = () => {
               />
             </div>
             <div className="space-x-3">
-              <Button size="md" text="Pledge" withBg onClick={() =>Pledge(matic, data, account, isReady)}/>
+              <Button size="md" text="Pledge" withBg onClick={() =>Pledge(matic,account, data, isReady)}/>
               <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
             </div>
           </div>
