@@ -3,7 +3,7 @@ import React, { FC } from "react";
 interface Props {
   votes: number;
   percentage: number;
-  status: "against" | "for";
+  status: string;
 }
 
 const TableDataVoteProgress: FC<Props> = ({ votes, percentage, status }) => {

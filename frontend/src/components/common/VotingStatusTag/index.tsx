@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-const VotingStatusTag: FC<{ status: "active" | "executed" }> = ({ status }) => {
+const VotingStatusTag: FC<{ status: string }> = ({ status }) => {
   return (
     <span
       className={`uppercase font-medium rounded-sm px-2 py-1 ${

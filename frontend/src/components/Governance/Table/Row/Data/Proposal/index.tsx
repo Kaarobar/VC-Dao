@@ -4,7 +4,7 @@ import VotingStatusTag from "../../../../../common/VotingStatusTag";
 interface Props {
   title: string;
   id: number;
-  status: "active" | "executed";
+  status: string;
 }
 
 const TableDataProposal: FC<Props> = ({ title, id, status }) => {

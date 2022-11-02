@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../common/Button";
 import { Web3Button, useAccount } from "@web3modal/react";
+import Link from "next/link";
 
 const Header = () => {
   const { account } = useAccount();
@@ -16,9 +17,12 @@ const Header = () => {
 
           <div className="flex items-center gap-x-4">
             <div>
-              <p className="text-gray-600 hover:underline  font-normal text-lg cursor-pointer">
+              <Link
+                href="/daos"
+                className="text-gray-600 no-underline hover:underline  font-normal text-lg cursor-pointer"
+              >
                 Daos
-              </p>
+              </Link>
             </div>
             <Web3Button />
           </div>

@@ -37,6 +37,7 @@ const StepTwo: FC<Props> = ({ savedValues, handleBack }) => {
             ...savedValues[0],
             desc: values.desc,
           });
+          // add propose function here
         }}
       >
         {(formik) => (
@@ -47,7 +48,7 @@ const StepTwo: FC<Props> = ({ savedValues, handleBack }) => {
                   placeholder="Description"
                   name="desc"
                   className="pl-3 border-[1px] outline-none h-40 border-[#dcdfe6] border-solid w-full resize-none text-gray-600 text-base rounded-sm box-border"
-                  {...formik.getFieldProps("title")}
+                  {...formik.getFieldProps("desc")}
                 />
                 {formik.touched.desc && formik.errors.desc ? (
                   <div className="text-sm text-red-600 mt-1">

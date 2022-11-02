@@ -9,8 +9,82 @@ import { TableData } from "../../../components/Governance/Table/Row/Data";
 import TableDataProposal from "../../../components/Governance/Table/Row/Data/Proposal";
 import TableDataVoteProgress from "../../../components/Governance/Table/Row/Data/VoteProgress";
 import TableDateVotes from "../../../components/Governance/Table/Row/Data/Votes";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+const proposals = [
+  {
+    title: "Liquidation Event Handling And Collateral Reserves",
+    status: "active",
+    id: 123,
+    for: {
+      status: "for",
+      votes: 35.2,
+      percentage: 60,
+    },
+    against: {
+      status: "against",
+      votes: 35.2,
+      percentage: 60,
+    },
+    votes: 35.2,
+    addresses: 48,
+  },
+  {
+    title: "Liquidation Event Handling And Collateral Reserves",
+    status: "active",
+    id: 123,
+    for: {
+      status: "for",
+      votes: 35.2,
+      percentage: 60,
+    },
+    against: {
+      status: "against",
+      votes: 35.2,
+      percentage: 60,
+    },
+    votes: 35.2,
+    addresses: 48,
+  },
+  {
+    title: "Liquidation Event Handling And Collateral Reserves",
+    status: "active",
+    id: 123,
+    for: {
+      status: "for",
+      votes: 35.2,
+      percentage: 60,
+    },
+    against: {
+      status: "against",
+      votes: 35.2,
+      percentage: 60,
+    },
+    votes: 35.2,
+    addresses: 48,
+  },
+  {
+    title: "Liquidation Event Handling And Collateral Reserves",
+    status: "active",
+    id: 123,
+    for: {
+      status: "for",
+      votes: 35.2,
+      percentage: 60,
+    },
+    against: {
+      status: "against",
+      votes: 35.2,
+      percentage: 60,
+    },
+    votes: 35.2,
+    addresses: 48,
+  },
+];
 
 const Governance = () => {
+  const router = useRouter();
   return (
     <Layout>
       <div className="my-16">
@@ -31,7 +105,9 @@ const Governance = () => {
               </div>
             </div>
             <div className="space-x-2">
-              <Button size="md" withBg={false} text="Create new proposal" />
+              <Link href="/create-proposal">
+                <Button size="md" withBg={false} text="Create new proposal" />
+              </Link>
               <Button size="md" withBg text="Delegate Vote" />
             </div>
           </div>
@@ -90,84 +166,42 @@ const Governance = () => {
                 ]}
               />
               <tbody>
-                <TableRow>
-                  <TableData>
-                    <TableDataProposal
-                      title="Liquidation Event Handling And Collateral Reserves"
-                      status="active"
-                      id={123}
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="for"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="against"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDateVotes votes={35.2} addresses={48} />
-                  </TableData>
-                </TableRow>
-                <TableRow>
-                  <TableData>
-                    <TableDataProposal
-                      title="Liquidation Event Handling And Collateral Reserves"
-                      status="executed"
-                      id={123}
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="for"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="against"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDateVotes votes={35.2} addresses={48} />
-                  </TableData>
-                </TableRow>
-                <TableRow>
-                  <TableData>
-                    <TableDataProposal
-                      title="Liquidation Event Handling And Collateral Reserves"
-                      status="active"
-                      id={123}
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="for"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDataVoteProgress
-                      votes={35.2}
-                      percentage={60}
-                      status="against"
-                    />
-                  </TableData>
-                  <TableData>
-                    <TableDateVotes votes={35.2} addresses={48} />
-                  </TableData>
-                </TableRow>
+                {proposals.map((proposal, i) => (
+                  <TableRow key={i}>
+                    <TableData>
+                      <Link
+                        href={`${router.asPath}/proposal/${i}`}
+                        className="no-underline"
+                      >
+                        <TableDataProposal
+                          title={proposal.title}
+                          status={proposal.status}
+                          id={proposal.id}
+                        />
+                      </Link>
+                    </TableData>
+                    <TableData>
+                      <TableDataVoteProgress
+                        votes={proposal.for.votes}
+                        percentage={proposal.for.percentage}
+                        status={proposal.for.status}
+                      />
+                    </TableData>
+                    <TableData>
+                      <TableDataVoteProgress
+                        votes={proposal.against.votes}
+                        percentage={proposal.against.percentage}
+                        status={proposal.against.status}
+                      />
+                    </TableData>
+                    <TableData>
+                      <TableDateVotes
+                        votes={proposal.votes}
+                        addresses={proposal.addresses}
+                      />
+                    </TableData>
+                  </TableRow>
+                ))}
               </tbody>
             </table>
           </div>
