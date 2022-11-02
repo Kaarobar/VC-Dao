@@ -18,9 +18,10 @@ import {
 } from "../../web3functions/functions";
 import { BigNumber, ethers } from "ethers";
 import moment from "moment";
+import { Props } from "next/script";
 const project = require("../../../../backend/deployments/polygon/Project.json");
 
-const InitialHomeScreen: FC<{ setStateChange: any }> = ({}) => {
+const InitialHomeScreen: FC<{ setPageChange: any }> = ({setPageChange}) => {
   const [details, setDetails] = useState<any>();
 
   const [date, setDate] = useState<any>(0);
@@ -110,10 +111,10 @@ const InitialHomeScreen: FC<{ setStateChange: any }> = ({}) => {
                 text="Pledge"
                 withBg
                 onClick={() =>
-                  Pledge(matic, account, data, isReady) && setStateChange(true)
+                  Pledge(matic, account, data, isReady)
                 }
               />
-              <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
+              <Button size="md" text="Unpledge" withBg disable={matic !== ""} onClick={() =>setPageChange(true)} />
             </div>
           </div>
         ) : (

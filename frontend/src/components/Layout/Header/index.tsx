@@ -1,10 +1,12 @@
 import React from "react";
 import Button from "../../common/Button";
-import { Web3Button, useAccount } from "@web3modal/react";
+import { Web3Button, useAccount, useSigner } from "@web3modal/react";
 import Link from "next/link";
+import { getTokens } from "../../../web3functions/functions";
 
 const Header = () => {
-  const { account } = useAccount();
+  const { account, isReady} = useAccount();
+  const {data} = useSigner();
   return (
     <div className="w-full">
       <div className="py-4 px-6">
@@ -27,7 +29,7 @@ const Header = () => {
               </Link>
             </div>
             <div>
-              <Button size="sm" text="Claim VC Dao" />
+              <Button size="sm" text="Claim VC Dao" onClick={()=> getTokens(account, isReady, data)}/>
             </div>
             <Web3Button />
           </div>
