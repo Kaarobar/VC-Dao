@@ -16,7 +16,7 @@ import {
   Details,
   contributedAmnt,
 } from "../../web3functions/functions";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import moment from "moment";
 const project = require("../../../../backend/deployments/polygon/Project.json");
 
@@ -32,6 +32,7 @@ const InitialHomeScreen = () => {
 
   const [stateChange, setStateChange] = useState(false);
   const [matic, setMatic] = useState("");
+  const [goalPercent, setGoalPercent] = useState(0);
   const [contributed, setContributed] = useState("0");
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
 
@@ -42,35 +43,36 @@ const InitialHomeScreen = () => {
         setDate(
           moment.unix(ethers.BigNumber.from(details.deadline._hex).toNumber())
         );
+        setGoalPercent(Number(ethers.utils.formatEther(BigNumber.from(details.amountRaised).toString())))
+        if(account.address != "") contributedAmnt(account.address, setContributed)
       }
-    })();
+    })(), [account];
   }, [details]);
 
-  const handleStateChange = () => {
+  const handleStateChange = async () => {
     if (account.isConnected) {
       {
         console.log("Signer: ", data);
       }
       setStateChange(true);
-      //contributedAmnt(account.address, setContributed)
+      //setContributed(await contributedAmnt(account.address, setContributed))
     } else {
       if (!isOpen) {
         open();
-        //contributedAmnt(account.address, setContributed)
       }
     }
   };
-
+  //Number(details?.amountToRaise._hex)
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      <CircularProgressBarWithLogo percentage={80} />
+      <CircularProgressBarWithLogo percentage={goalPercent} />
 
       <div className="flex items-center gap-2 mt-4">
         <div className="w-6 h-6">
           <img src="/assets/images/matic.png" className="w-full h-full" />
         </div>
         <div className="uppercase text-lg font-medium text-gray-500">
-          {details && Number(details?.amountToRaise._hex)}{" "}
+          {details && Number(ethers.utils.formatEther(details?.amountToRaise).toString())}{" "}
           Matic
         </div>
       </div>
@@ -90,6 +92,7 @@ const InitialHomeScreen = () => {
                 className="pl-2 border-[1px] outline-none h-10 border-[#dcdfe6] w-full border-solid text-gray-600 text-base rounded-sm box-border"
               />
             </div>
+            <div>Contributed: {contributed}</div>
             <div className="space-x-3">
               <Button
                 size="md"

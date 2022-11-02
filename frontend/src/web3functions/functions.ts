@@ -19,14 +19,21 @@ export async function Details() {
     const provider = new ethers.providers.JsonRpcProvider("https://rpc-mumbai.maticvigil.com/")
     const contract = new ethers.Contract(project.address, project.abi, provider)
     const tx = await contract.getDetails()
-    console.log(tx)
     return tx
 }
-
+//checks the amount of funds provided to the Project
 export async function contributedAmnt(account, setContributed) {
     const provider = new ethers.providers.JsonRpcProvider("https://rpc-mumbai.maticvigil.com/")
     const contract = new ethers.Contract(project.address, project.abi, provider)
-    const tx = await contract.contributedFunds(account.address)
-    console.log(tx)
+    const tx = await contract.contributedFunds(account)
+    setContributed(ethers.utils.formatEther(tx).toString())
     return tx
+}
+
+export async function getTokens(account: any, isReady: any, data: any){
+    if(isReady){
+        const contract = new ethers.Contract(project.address, project.abi, data)
+        const tx = await contract.claimTokens({from: account.address} )
+        await tx.wait()
+    }
 }
