@@ -32,41 +32,7 @@ const proposals = [
   },
   {
     title: "Liquidation Event Handling And Collateral Reserves",
-    status: "active",
-    id: 123,
-    for: {
-      status: "for",
-      votes: 35.2,
-      percentage: 60,
-    },
-    against: {
-      status: "against",
-      votes: 35.2,
-      percentage: 60,
-    },
-    votes: 35.2,
-    addresses: 48,
-  },
-  {
-    title: "Liquidation Event Handling And Collateral Reserves",
-    status: "active",
-    id: 123,
-    for: {
-      status: "for",
-      votes: 35.2,
-      percentage: 60,
-    },
-    against: {
-      status: "against",
-      votes: 35.2,
-      percentage: 60,
-    },
-    votes: 35.2,
-    addresses: 48,
-  },
-  {
-    title: "Liquidation Event Handling And Collateral Reserves",
-    status: "active",
+    status: "EXECUTED",
     id: 123,
     for: {
       status: "for",
@@ -85,6 +51,8 @@ const proposals = [
 
 const Governance = () => {
   const router = useRouter();
+  const { governanceId } = router.query;
+
   return (
     <Layout>
       <div className="my-16">
@@ -93,14 +61,20 @@ const Governance = () => {
             <div className="flex items-center gap-x-2 flex-grow">
               <div className="w-16 h-16">
                 <img
-                  src="/assets/images/compound.webp"
+                  src={`/assets/images/${
+                    governanceId === "compound"
+                      ? "compound.webp"
+                      : "uniswap.webp"
+                  }`}
                   className="w-full h-full"
                 />
               </div>
               <div className="space-y-1">
-                <h2>Compound</h2>
+                <h2 className="capitalize">{governanceId}</h2>
                 <p className="text-gray-600 hover:underline">
-                  https://compound.finance/
+                  {governanceId === "compound"
+                    ? "https://compound.finance/"
+                    : "https://uniswap.org"}
                 </p>
               </div>
             </div>
@@ -127,12 +101,12 @@ const Governance = () => {
                 <span className="text-gray-600">Proposal</span>
               </div>
               <div className="flex justify-center flex-1 text-sm flex-col gap-y-1 text-center">
-                <span className="text-gray-700 font-medium">90</span>
-                <span className="text-gray-600">Proposal</span>
+                <span className="text-gray-700 font-medium">90k</span>
+                <span className="text-gray-600">Holders</span>
               </div>
               <div className="flex justify-center flex-1 text-sm flex-col gap-y-1 text-center">
-                <span className="text-gray-700 font-medium">90</span>
-                <span className="text-gray-600">Proposal</span>
+                <span className="text-gray-700 font-medium">190k</span>
+                <span className="text-gray-600">Voters</span>
               </div>
             </div>
           </div>

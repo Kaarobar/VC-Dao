@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Countdown from "./Countdown";
 import "react-circular-progressbar/dist/styles.css";
 import CircularProgressBarWithLogo from "./CircularProgressBarWithLogo";
@@ -20,7 +20,7 @@ import { BigNumber, ethers } from "ethers";
 import moment from "moment";
 const project = require("../../../../backend/deployments/polygon/Project.json");
 
-const InitialHomeScreen = () => {
+const InitialHomeScreen: FC<{ setStateChange: any }> = ({}) => {
   const [details, setDetails] = useState<any>();
 
   const [date, setDate] = useState<any>(0);
@@ -43,10 +43,18 @@ const InitialHomeScreen = () => {
         setDate(
           moment.unix(ethers.BigNumber.from(details.deadline._hex).toNumber())
         );
-        setGoalPercent(Number(ethers.utils.formatEther(BigNumber.from(details.amountRaised).toString())))
-        if(account.address != "") contributedAmnt(account.address, setContributed)
+        setGoalPercent(
+          Number(
+            ethers.utils.formatEther(
+              BigNumber.from(details.amountRaised).toString()
+            )
+          )
+        );
+        if (account.address != "")
+          contributedAmnt(account.address, setContributed);
       }
-    })(), [account];
+    })(),
+      [account];
   }, [details]);
 
   const handleStateChange = async () => {
@@ -72,7 +80,10 @@ const InitialHomeScreen = () => {
           <img src="/assets/images/matic.png" className="w-full h-full" />
         </div>
         <div className="uppercase text-lg font-medium text-gray-500">
-          {details && Number(ethers.utils.formatEther(details?.amountToRaise).toString())}{" "}
+          {details &&
+            Number(
+              ethers.utils.formatEther(details?.amountToRaise).toString()
+            )}{" "}
           Matic
         </div>
       </div>
@@ -98,7 +109,9 @@ const InitialHomeScreen = () => {
                 size="md"
                 text="Pledge"
                 withBg
-                onClick={() => Pledge(matic, account, data, isReady)}
+                onClick={() =>
+                  Pledge(matic, account, data, isReady) && setStateChange(true)
+                }
               />
               <Button size="md" text="Unpledge" withBg disable={matic !== ""} />
             </div>

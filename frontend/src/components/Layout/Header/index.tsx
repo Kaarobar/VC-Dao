@@ -10,9 +10,11 @@ const Header = () => {
       <div className="py-4 px-6">
         <div className="flex items-center">
           <div className="flex-grow">
-            <h2 className="font-semibold tracking-wide text-gray-800">
-              VC Dao
-            </h2>
+            <Link href="/" className="no-underline">
+              <h2 className="font-semibold tracking-wide text-gray-800">
+                VC Dao
+              </h2>
+            </Link>
           </div>
 
           <div className="flex items-center gap-x-4">
@@ -23,6 +25,9 @@ const Header = () => {
               >
                 Daos
               </Link>
+            </div>
+            <div>
+              <Button size="sm" text="Claim VC Dao" />
             </div>
             <Web3Button />
           </div>

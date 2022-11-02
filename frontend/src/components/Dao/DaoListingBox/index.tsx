@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Link from "next/link";
 
 interface Props {
   dao: string;
@@ -23,9 +24,12 @@ const DaoListingBox: FC<Props> = ({
             <div className="h-16 w-16">
               <img src={daoIconSrc} className="w-full h-full rounded-full" />
             </div>
-            <div>
-              <h2 className="font-medium text-gray-800">{dao}</h2>
-            </div>
+
+            <Link href={`/governance/${dao}`} className="no-underline">
+              <div>
+                <h2 className="font-medium text-gray-800 capitalize">{dao}</h2>
+              </div>
+            </Link>
           </div>
           <div>
             <div className="flex items-center justify-around gap-x-4">
@@ -34,11 +38,11 @@ const DaoListingBox: FC<Props> = ({
                 <span className="text-gray-600">Proposal</span>
               </div>
               <div className="flex justify-center flex-1 flex-col gap-y-2 text-center">
-                <span className="text-gray-700 font-medium">{holders}</span>
+                <span className="text-gray-700 font-medium">{holders}k</span>
                 <span className="text-gray-600">Holders</span>
               </div>
               <div className="flex justify-center flex-1 flex-col gap-y-2 text-center">
-                <span className="text-gray-700 font-medium">{voters}</span>
+                <span className="text-gray-700 font-medium">{voters}k</span>
                 <span className="text-gray-600">Voters</span>
               </div>
             </div>
