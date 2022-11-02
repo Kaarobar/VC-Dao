@@ -19,7 +19,7 @@ import {
 import { BigNumber, ethers } from "ethers";
 import moment from "moment";
 import { Props } from "next/script";
-const project = require("../../../../backend/deployments/polygon/Project.json");
+const project = require("../../web3functions/Project.json");
 
 const InitialHomeScreen: FC<{ setPageChange: any }> = ({setPageChange}) => {
   const [details, setDetails] = useState<any>();

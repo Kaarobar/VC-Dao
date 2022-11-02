@@ -3,7 +3,7 @@ import { useAccount, useContract, useProvider, Web3Modal } from "@web3modal/reac
 import { sign } from "crypto";
 import { ethers } from "ethers";
 import { Form } from "formik";
-import project from "../../../backend/deployments/polygon/Project.json";
+import project from "./Project.json";
 
 //following are the functions to trigger when writing relevant scripts
 export async function Pledge(value: string,account, data: any, isReady: boolean) {
