@@ -104,9 +104,6 @@ contract Project is Ownable {
     function contribute() public payable isState(State.FUNDRAISING) {
         if (msg.sender == i_creator)
             revert Project__CreatorCannotFundHisProject();
-        (bool callSuccess, ) = payable(address(this)).call{value: msg.value}("");
-        require(callSuccess, "Not enough funds");
-
         contributedFunds[msg.sender] += msg.value;
         s_currentBalance += msg.value;
         emit FundsContributed(msg.sender, address(this), msg.value);
