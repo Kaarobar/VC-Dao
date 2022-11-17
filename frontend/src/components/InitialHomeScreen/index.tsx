@@ -49,7 +49,9 @@ const InitialHomeScreen: FC<{ setPageChange: any }> = ({setPageChange}) => {
             ethers.utils.formatEther(
               BigNumber.from(details.amountRaised).toString()
             )
-          )
+          ) / Number(ethers.utils.formatEther(
+            BigNumber.from(details.amountToRaise).toString()
+          )) * 100
         );
         if (account.address != "")
           contributedAmnt(account.address, setContributed);
