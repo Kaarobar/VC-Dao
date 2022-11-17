@@ -18,12 +18,13 @@ const deployVcDaoProject: DeployFunction = async function (
   log("Deploying VCDao and waiting for confirmations...");
   const args = [
     deployer,
-    "0xDe2c53a21fdB512bc7624706d2E4039eeA015258",
+    "0x4d3940164A51E0963c5B80d0dAfBf39C5ccDa750",
     "0",
     "100000",
     "VCDao",
     "Decentralized Investment platform",
     "1",
+    "1"
   ];
   const vcdao = await deploy("Project", {
     from: deployer,
